@@ -39,6 +39,11 @@
       "test-projects-only": "DEVBOX_RUN_PROJECT_TESTS=1 go test -v -timeout ${DEVBOX_GOLANG_TEST_TIMEOUT:-30m} ./... -run \"TestExamples|TestScriptsWithProjects\"",
       "update-examples":    "devbox run build && go run testscripts/testrunner/updater/main.go",
       "tidy":               "go mod tidy",
+
+      "test-linux-amd64": [
+        "devbox run build-linux-amd64",
+        "docker run --rm --privileged --env NIX_CONFIG='filter-syscalls = false' --platform linux/amd64 --mount type=volume,source=nix-linux-amd64,target=/nix --mount type=bind,source=\"$PWD\",target=/devbox ubuntu:noble /devbox/dist/devbox-linux-amd64 -c /devbox/testscripts/ld/numpy run test",
+      ],
     },
   },
 }

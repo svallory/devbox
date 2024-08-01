@@ -1,0 +1,20 @@
+{
+  "packages": {
+    "python": "latest",
+  },
+  "shell": {
+    "init_hook": [
+      // Make sure we're using a new virtualenv in case the OS or Python version
+      // changed.
+      "export VENV_DIR=$(mktemp -d)",
+      "python -m venv $VENV_DIR",
+    ],
+    "scripts": {
+      "test": [
+        ". $VENV_DIR/bin/activate",
+        "pip install numpy",
+        "python main.py",
+      ],
+    },
+  },
+}
